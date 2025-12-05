@@ -13,5 +13,45 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ソース ファイル\Core">
+      <UniqueIdentifier>{371eb535-5154-4425-84d1-c6b8628fe1ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics">
+      <UniqueIdentifier>{b76f2569-ec3b-4cf6-acfd-1df2daa32edd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ECS">
+      <UniqueIdentifier>{a2a1102b-654e-4953-971c-ca5907c88ccc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Components">
+      <UniqueIdentifier>{317282d3-39b8-4c08-ba74-7097f01b44bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Systems">
+      <UniqueIdentifier>{9f17adce-b6b2-4c8e-a3a1-97ff5e0bb913}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Core">
+      <UniqueIdentifier>{5ef0209d-bc04-40df-834e-e98b848b9ed9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Graphics">
+      <UniqueIdentifier>{7011a3dc-3cf6-4b0a-a79e-14eb38d93428}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\ECS">
+      <UniqueIdentifier>{8053cfec-791f-4569-a466-af7755ac9477}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Components">
+      <UniqueIdentifier>{26e046b7-2f95-42d7-8554-c053aac202f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Systems">
+      <UniqueIdentifier>{43d23577-5e97-4c6a-9a05-1a603a776c11}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SourceFile\Coare\Main.cpp">
+      <Filter>ソース ファイル\Core</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="HeaderFile\Core\Window.h">
+      <Filter>ヘッダー ファイル\Core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
