@@ -1,3 +1,17 @@
+////////////////////////////////
+// 
+// Main.cpp
+// ì¬ŠJn“úF2025/12/7
+// 
+// 
+// 
+// 
+// 
+////////////////////////////////
+
+
+
+
 #include <Windows.h>
 #include "HeaderFile/Core/Window.h"
 #include "HeaderFile/Core/Main.h"
