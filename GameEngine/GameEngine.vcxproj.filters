@@ -51,6 +51,9 @@
     <ClCompile Include="SourceFile\Coare\Window.cpp">
       <Filter>ソース ファイル\Core</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFile\Graphics\DX11Device.cpp">
+      <Filter>ソース ファイル\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HeaderFile\Core\Window.h">
@@ -58,6 +61,9 @@
     </ClInclude>
     <ClInclude Include="HeaderFile\Core\Main.h">
       <Filter>ヘッダー ファイル\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="HeaderFile\Graphics\DX11Device.h">
+      <Filter>ヘッダー ファイル\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

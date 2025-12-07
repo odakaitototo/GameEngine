@@ -135,10 +135,12 @@
   <ItemGroup>
     <ClCompile Include="SourceFile\Coare\Main.cpp" />
     <ClCompile Include="SourceFile\Coare\Window.cpp" />
+    <ClCompile Include="SourceFile\Graphics\DX11Device.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HeaderFile\Core\Main.h" />
     <ClInclude Include="HeaderFile\Core\Window.h" />
+    <ClInclude Include="HeaderFile\Graphics\DX11Device.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
