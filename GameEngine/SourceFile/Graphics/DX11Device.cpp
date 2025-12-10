@@ -26,7 +26,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-#include "HeaderFile/Graphics/DX11Device.h"
+#include "Graphics/DX11Device.h"
 
 //////////////////
 // コンストラクタ
@@ -110,7 +110,7 @@ bool DX11Device::Init(HWND hwnd, int width, int height)
 
 void DX11Device::Begin(float r, float g, float b)
 {
-	float clearColor[4] = { r, g, b, 1.0f }; // R,G,B,A
+	float clearColor[4] = { r, g, b, 1.0f }; // R,G,B,A  裏画面を指定色で塗りつぶしている
 	// 画面を指定職でクリア（塗りつぶし）
 	m_context->ClearRenderTargetView(m_rtv, clearColor);
 }

@@ -1,11 +1,11 @@
 ////////////////////////////////
 // 
 // Main.cpp
-// 作成開始日：2025/12/7
+// 製作開始日：2025/12/07
 // 
 // 製作日：2025/12/07
 // 作業内容：#1
-// 　　　追加：
+// 　　　追加：Begin(画面クリア)とEnd(表示)を繰り返して描画するようにした。
 // 
 // 
 // 
@@ -15,9 +15,9 @@
 
 
 #include <Windows.h>
-#include "HeaderFile/Core/Window.h"
-#include "HeaderFile/Core/Main.h"
-#include "HeaderFile/Graphics/DX11Device.h" // 描画するためのもの
+#include "Core/Window.h"
+#include "Core/Main.h"
+#include "Graphics/DX11Device.h" // 描画するためのもの
 
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -33,7 +33,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	// #1：DirectX初期化（ウィンドウのハンドルを渡す）
 	if (!dx11.Init(window.GetHandle(), SCREEEN_WIDTH, SCREEN_HEIGHT))
 	{
-		MessageBox(NULL, "DirectX Init Failed", "Error", MB_OK);
+		MessageBox(NULL, L"DirectX Init Failed", L"Error", MB_OK);
 		return -1;
 	}
 

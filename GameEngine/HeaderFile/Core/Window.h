@@ -1,6 +1,7 @@
 ////////////////////////////////
 // 
 // Window.h
+// 役割：Windows OSにお願いしてアプリのウィンドウを表示してもらう機能
 // 作成開始日：2025/12/7
 // 
 // 
@@ -20,7 +21,7 @@ public:
 
 	// ウィンドウを作成し、表示する
 	// width、height:解像度、title: ウィンドウ名
-	bool Init(HINSTANCE hInstance, int width, int height, const char* title);
+	bool Init(HINSTANCE hInstance, int width, int height, const wchar_t* title);
 
 	// メッセージを処理する（ゲーム内で毎フレーム呼ぶ）
 	// 戻り値:　trueなら継続、falseなら終了

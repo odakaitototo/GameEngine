@@ -1,6 +1,8 @@
 ////////////////////////////////
 // 
 // Main.h
+// 役割：ゲーム全体の設定を一元管理する場所
+// 
 // 作成開始日：2025/12/7
 // 
 // 
@@ -17,4 +19,4 @@ constexpr int SCREEEN_WIDTH = 1280;
 constexpr int SCREEN_HEIGHT = 720;
 
 // ウインドウタイトルの設定
-constexpr char WINDOW_TITL[] = "DirectX 11 ECS Engine";
+constexpr wchar_t WINDOW_TITL[] = L"DirectX 11 ECS Engine";

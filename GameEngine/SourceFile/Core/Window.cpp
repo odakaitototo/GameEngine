@@ -1,17 +1,18 @@
-////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 // 
 // Window.cpp
+// 役割：Windows OSにお願いしてアプリのウィンドウを表示してもらう機能
 // 作成開始日：2025/12/7
 // 
 // 
 // 
 // 
 // 
-////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 
 
 
-#include "HeaderFile/Core/Window.h"
+#include "Core/Window.h"
 
 
 // ウィンドウプロシージャ（クラスの外に置くのが一番簡単）
@@ -37,7 +38,7 @@ Window::~Window()
 	// 終了時に登録会よなどが必要ならここに書く
 }
 
-bool Window::Init(HINSTANCE hInstance, int width, int height, const char* title)
+bool Window::Init(HINSTANCE hInstance, int width, int height, const wchar_t* title)
 {
 
 	m_wc.cbSize = sizeof(WNDCLASSEX);
@@ -46,7 +47,7 @@ bool Window::Init(HINSTANCE hInstance, int width, int height, const char* title)
 	m_wc.hInstance = hInstance;
 	m_wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	m_wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-	m_wc.lpszClassName = "MyDX11EngineWindowClass";
+	m_wc.lpszClassName = L"MyDX11EngineWindowClass";
 	
 
 	if (!RegisterClassEx(&m_wc))
