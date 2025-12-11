@@ -48,7 +48,7 @@ public:
 
 		// ƒVƒXƒeƒ€‚ğì¬‚µ‚Ä•Û‘¶
 		auto system = make_shared<T>();
-		m_system.insert({ typeName, system });
+		m_systems.insert({ typeName, system });
 		return system;
 	}
 
@@ -58,7 +58,7 @@ public:
 	template<typename T>
 	void SetSignature(Signature signature)
 	{
-		const char* typename = typeid(T).name();
+		const char* typeName = typeid(T).name();
 		assert(m_systems.find(typename) != m_systems.end() && "System used before registered.");
 
 		m_signatures.insert({ typeName, signature });

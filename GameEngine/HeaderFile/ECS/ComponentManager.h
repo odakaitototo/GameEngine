@@ -35,7 +35,7 @@ public:
 
 	// コンポーネントをEntityに追加
 	virtual ~IComponentArray() = default;
-	virtual void EntityDestroyed(Entity entity) = 0;
+	virtual void EntityDestroyed(Entity entity) = 0; // 「Entityが死んだ時の処理」だけは共通して持っておいてという約束
 
 };
 
@@ -44,43 +44,53 @@ public:
 // データ管理クラス（Packed Array）
 // ここに実際のデータが「ぎっちり」詰まって入ります
 template<typename T>
-class ComponentArray : public IComponentArray
+class ComponentArray : public IComponentArray // スーパーセットの実体
 {
 public:
 
 	// コンポーネントをEntityに追加
 	void InsertData(Entity entity, T component)
 	{
-		assert(m_entityToIndexMap.find(entity) == m_entityToIndexMap.end() && "Component added to same entity more than once.");
+		assert(m_entityToIndexMap.find(entity) == m_entityToIndexMap.end() && "Component added to same entity more than once."); // 既に持っているのに追加しようとしていないかチェック
 		 // 新しいデータを配列の末尾に追加
 		size_t newIndex = m_size;
-		m_entityToIndexMap[entity] = newIndex;
-		m_indexToEntityMap[newIndex] = component;
-
+		m_entityToIndexMap[entity] = newIndex; // 地図(Map)に記録：「このEntityのデータは、配列のnewIndex番目にあるよ」
+		m_indexToEntityMap[newIndex] = entityid; // 逆引き辞書も記録：「このEntityのデータは、配列のnewIndex番目にあるよ」
+		m_componentArray[newIndex] = component; // 実際のデータを配列に保存
 		m_size++;
 	}
 
 	// コンポーネントを消去（重要：配列の穴埋め処理）
 	void RemoveData(Entity entity)
 	{
-		assert(m_entityToIndexMap.find(entity != m_entityToIndexMap.end() && "Removing non-existent component."));
+		assert(m_entityToIndexMap.find(entity) != m_entityToIndexMap.end() && "Removing non-existent component.");
 		
 		// 消去するデータの位置
-		size_t index0fRemovedEntity = m_entityToIndexMap[entity];
-		size_t index0fLastElement = m_size - 1;
+		size_t indexOfRemovedEntity = m_entityToIndexMap[entity];
+		size_t indexOfLastElement = m_size - 1;
 
 		// 配列の一番後ろにあるデータを、消去して空いた穴に移動させる（上書きコピー）
-		m_componentArray[index0fRemovedEntity] = m_componentArray[index0fLastElement];
+		m_componentArray[indexOfRemovedEntity] = m_componentArray[index0fLastElement];
 
-		// マップ情報も更新
+		Entity entityOfLastElement = m_indexToEntityMap[indexOfLastElement]; // 移動してきたデータの持ち主(Entity)を特定
+
+		// マップ情報も更新(「末尾にいたあの子、消去された穴の場所に移動した」)
+		m_entityToIndexMap[entityOfLastElement] = indexOfRemovedEntity;
+		m_indexToEntityMap[indexOfRemovedEntity] = entityOfLastElement;
+
+		// 古いキーを消去
+		m_entityToIndexMap.erase(entity);
+		m_indexToEntityMap.erase(indexOfLastElement);
+
+		m_size--;
 
 	}
 
 private:
 	
-	array<T, MAX_ENTITIES> m_componentArray; // 実際のコンポーネントデータ（ここがメモリ上で連続になる！）
+	array<T, MAX_ENTITIES> m_componentArray; // 実際のコンポーネントデータ（ここがメモリ上で連続になる！）メモリ上で隙間なく並ぶので超高速
 
-	unordered_map<Entity, size_t> m_entityToIndexMap; // Entity ID -> 配列インデックスの変換マップ
+	unordered_map<Entity, size_t> m_entityToIndexMap; // Entity ID -> 配列インデックスの変換マップ。スパース配列（地図）
 
 	unordered_map<size_t, Entity> m_indexToEntityMap; // 配列インデックス -> Entity ID の逆引きマップ
 
@@ -94,7 +104,7 @@ class ComponentManager
 {
 public:
 
-	// コンポーネントを登録（ゲーム機同時に呼ぶ）
+	// コンポーネントの「型」登録（ゲーム機同時に呼ぶ）
 	template<typename T>
 	void RegisterComponent()
 	{
@@ -114,7 +124,7 @@ public:
 	{
 		const char* typeName = typeid(T).name();
 		assert(m_componentTypes.find(typeName) != m_componentTypes.end() && "Component not registered before use.");
-		return m_componentTypes[typeNamae];
+		return m_componentTypes[typeName];
 
 	}
 
@@ -149,7 +159,7 @@ private:
 	shared_ptr<ComponentArray<T>> GetComponentArray()
 	{
 		const char* typeName = typeid(T).name();
-		assert(ComponentType.find(typeName) != ComponentType.end() && "Component not registered befor use.");
+		assert(m_componentTypes.find(typeName) != ComponentType.end() && "Component not registered befor use.");
 		return static_pointer_cast<ComponentArray<T>>(m_componentArrays[typeName]);
 	}
 

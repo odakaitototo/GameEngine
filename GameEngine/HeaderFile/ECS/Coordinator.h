@@ -22,7 +22,6 @@
 #include "EntityManager.h"
 #include "ComponentManager.h"
 #include "SystemManager.h"
-#include "SystemManager.h"
 #include <memory>
 
 class Coordinator
@@ -67,13 +66,13 @@ public:
 		// Componentを追加したので、EntityのSignature（構成）を更新する
 		auto signature = m_entityManager->GetSignature(entity);
 		signature.set(m_componentManager->GetComponentType<T>(), true);
-		m_entityManager->GetSignature(entity, signature);
+		m_entityManager->SetSignature(entity, signature);
 
 		// System側に「構成が変わったからチェックしてね」と通知
 		m_systemManager->EntitySignatureChanged(entity, signature);
 	}
 
-	template<typename>
+	template<typename T >
 	void RemoveComponent(Entity entity)
 	{
 		m_componentManager->RemoveComponent<T>(entity);
@@ -82,13 +81,13 @@ public:
 		signature.set(m_componentManager->GetComponentType<T>(), false);
 		m_entityManager->SetSignature(entity, signature);
 
-		m_systemManager->EntitySignatureChanged(entity.signature);
+		m_systemManager->EntitySignatureChanged(entity, signature);
 	}
 
 	template<typename T >
 	T& GetComponent(Entity entity)
 	{
-		return m_componentManager->GetComponent<T>();
+		return m_componentManager->GetComponent<T>(entity);
 	}
 
 
@@ -103,11 +102,11 @@ public:
 	template<typename T >
 	shared_ptr<T> RegisterSystem()
 	{
-		rturn m_systemManager->RegisterSystem<T>();
+		return m_systemManager->RegisterSystem<T>();
 	}
 
 	template<typename T >
-	void SetsystemSignature(Signature signature)
+	void SetSystemSignature(Signature signature)
 	{
 		m_systemManager->SetSignature<T>(signature);
 	}
