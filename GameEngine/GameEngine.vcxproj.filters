@@ -43,6 +43,9 @@
     <Filter Include="ヘッダー ファイル\Systems">
       <UniqueIdentifier>{43d23577-5e97-4c6a-9a05-1a603a776c11}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{fe932bad-4aca-47d5-80e1-efda83b042bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceFile\Graphics\DX11Device.cpp">
@@ -80,5 +83,13 @@
     <ClInclude Include="HeaderFile\ECS\SystemManager.h">
       <Filter>ヘッダー ファイル\ECS</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\SimpleVertexShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\SimplePixelShader.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
