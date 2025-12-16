@@ -133,11 +133,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="HeaderFile\Components\TransformComponent.h" />
     <ClCompile Include="SourceFile\Core\Main.cpp" />
     <ClCompile Include="SourceFile\Core\Window.cpp" />
     <ClCompile Include="SourceFile\Graphics\DX11Device.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="HeaderFile\Components\MeshComponent.h" />
     <ClInclude Include="HeaderFile\Core\Main.h" />
     <ClInclude Include="HeaderFile\Core\Window.h" />
     <ClInclude Include="HeaderFile\ECS\ComponentManager.h" />
@@ -146,6 +148,7 @@
     <ClInclude Include="HeaderFile\ECS\EntityManager.h" />
     <ClInclude Include="HeaderFile\ECS\SystemManager.h" />
     <ClInclude Include="HeaderFile\Graphics\DX11Device.h" />
+    <ClInclude Include="HeaderFile\Systems\RenderSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\SimplePixelShader.hlsl">

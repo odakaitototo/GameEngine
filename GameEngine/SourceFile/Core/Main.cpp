@@ -75,7 +75,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	Vertex vertices[] = {
 		{ 0.0f, 0.5f, 0.0f}, // #2:è„
 		{0.5f, -0.5f, 0.0f}, // #2:âEâ∫
-		{-0.5f, -0.5f, 0.0f},
+		{-0.5f, -0.5f, 0.0f}, // #2:ç∂â∫
 
 
 	};
