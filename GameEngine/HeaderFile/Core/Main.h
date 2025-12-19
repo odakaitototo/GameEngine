@@ -19,4 +19,4 @@ constexpr int SCREEEN_WIDTH = 1280;
 constexpr int SCREEN_HEIGHT = 720;
 
 // ウインドウタイトルの設定
-constexpr wchar_t WINDOW_TITL[] = L"DirectX 11 ECS Engine";
+constexpr wchar_t WINDOW_TITLE[] = L"DirectX 11 ECS Engine";

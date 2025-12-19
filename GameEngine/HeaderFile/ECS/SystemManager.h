@@ -44,7 +44,7 @@ public:
 	shared_ptr<T> RegisterSystem()
 	{
 		const char* typeName = typeid(T).name();
-		assert(m_systems.find(typeName) == m_systems.end() && "Registering system mor than once.");
+		assert(m_systems.find(typename) == m_systems.end() && "Registering system mor than once.");
 
 		// ƒVƒXƒeƒ€‚ğì¬‚µ‚Ä•Û‘¶
 		auto system = make_shared<T>();
