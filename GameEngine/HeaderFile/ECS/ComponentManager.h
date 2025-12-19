@@ -55,7 +55,7 @@ public:
 		 // 新しいデータを配列の末尾に追加
 		size_t newIndex = m_size;
 		m_entityToIndexMap[entity] = newIndex; // 地図(Map)に記録：「このEntityのデータは、配列のnewIndex番目にあるよ」
-		m_indexToEntityMap[newIndex] = entityid; // 逆引き辞書も記録：「このEntityのデータは、配列のnewIndex番目にあるよ」
+		m_indexToEntityMap[newIndex] = entity; // 逆引き辞書も記録：「このEntityのデータは、配列のnewIndex番目にあるよ」
 		m_componentArray[newIndex] = component; // 実際のデータを配列に保存
 		m_size++;
 	}
@@ -70,7 +70,7 @@ public:
 		size_t indexOfLastElement = m_size - 1;
 
 		// 配列の一番後ろにあるデータを、消去して空いた穴に移動させる（上書きコピー）
-		m_componentArray[indexOfRemovedEntity] = m_componentArray[index0fLastElement];
+		m_componentArray[indexOfRemovedEntity] = m_componentArray[indexOfLastElement];
 
 		Entity entityOfLastElement = m_indexToEntityMap[indexOfLastElement]; // 移動してきたデータの持ち主(Entity)を特定
 
@@ -159,11 +159,11 @@ private:
 	shared_ptr<ComponentArray<T>> GetComponentArray()
 	{
 		const char* typeName = typeid(T).name();
-		assert(m_componentTypes.find(typeName) != ComponentType.end() && "Component not registered befor use.");
+		assert(m_componentTypes.find(typeName) != m_componentType.end() && "Component not registered befor use.");
 		return static_pointer_cast<ComponentArray<T>>(m_componentArrays[typeName]);
 	}
 
-	unordered_map<const char*, ComponentType> m_componentType; // 型名文字列 -> コンポーネント種類IDのマップ
+	unordered_map<const char*, ComponentType> m_componentTypes; // 型名文字列 -> コンポーネント種類IDのマップ
 
 	unordered_map < const char*, shared_ptr<IComponentArray>> m_componentArrays; // 型名文字列 -> コンポーネント配列クラスのマップ
 
