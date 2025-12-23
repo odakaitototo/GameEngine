@@ -57,8 +57,8 @@
     <ClCompile Include="SourceFile\Core\Window.cpp">
       <Filter>ソース ファイル\Core</Filter>
     </ClCompile>
-    <ClCompile Include="HeaderFile\Components\TransformComponent.h">
-      <Filter>ヘッダー ファイル\Components</Filter>
+    <ClCompile Include="SourceFile\Systems\RenderSystem.cpp">
+      <Filter>ソース ファイル\Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -86,7 +86,7 @@
     <ClInclude Include="HeaderFile\ECS\SystemManager.h">
       <Filter>ヘッダー ファイル\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="HeaderFile\Components\MeshComponent.h">
+    <ClInclude Include="HeaderFile\Components\Components.h">
       <Filter>ヘッダー ファイル\Components</Filter>
     </ClInclude>
     <ClInclude Include="HeaderFile\Systems\RenderSystem.h">
