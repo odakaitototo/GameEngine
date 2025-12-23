@@ -24,9 +24,21 @@
 
 #include <d3d11.h>
 #include <map>
+#include <DirectXMath.h>
 
 #include "ECS/SystemManager.h" // 親クラス Systemを使うため
 #include "Graphics/DX11Device.h" // 描画命令を出すため
+
+using namespace DirectX;
+
+// 定数バッファ用データの定義
+// シェーダーの　cbuffer と中身を一致させる必要がある
+struct ConstantBufferData
+{
+	XMMATRIX World; // ワールド行列
+	XMMATRIX View; // ビュー行列
+	XMMATRIX Projection; // プロジェクション行列
+};
 
 class Coordinator; // 「Coordinatorというクラスが存在しますよ」という予告（前方宣言）
 
@@ -55,8 +67,10 @@ private:
 	ID3D11PixelShader* m_pixelShader;
 	ID3D11InputLayout* m_inputLayout;
 
+
+	ID3D11Buffer* m_constantBuffer;
+
 	// 各Entityごとの頂点バッファを管理する地図
 	// キー：Entity, ID, 値：そのEntity専用の頂点バッファ
-
 	std::map<Entity, ID3D11Buffer*> m_vertexBuffers;
 };
