@@ -19,6 +19,15 @@
 // 
 ///////////////////////////////////////////////////////////////////
 
+
+cbuffer ConstantBuffer : register(b0)
+{
+    matrix World;  // ワールド行列
+    matrix View; // ビュー行列
+    matrix Projection; // プロジェクション行列
+}
+
+
 // 入力データ（CPUから送られてくるデータ）の型を定義
 struct VS_INPUT
 {
@@ -38,17 +47,16 @@ struct VS_OUTPUT
 // 役割：入ってきた頂点１つ1つに対して呼ばれる関数
 VS_OUTPUT main(VS_INPUT input)
 {
-    
-
 
     VS_OUTPUT output;
-
-// 本来はここで「3D座標」から「画面座標」への変換行列を掛け算しますが、
-// まずは変換せずに「そのまま」出力します。
-// つまり、最初から画面の座標系（-1.0から+1.0）で指定する前提です。
     
+    float4 pos = input.pos;
     
-    output.pos = input.pos;
+    pos = mul(pos, World); // 世界のどこにあるか
+    pos = mul(pos, View); // カメラがどう見えるか
+    pos = mul(pos, Projection); // 遠近感をつける
+    
+    output.pos = pos;
     
     return output;
 }

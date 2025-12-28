@@ -136,8 +136,11 @@
     <ClCompile Include="SourceFile\Core\Main.cpp" />
     <ClCompile Include="SourceFile\Core\Window.cpp" />
     <ClCompile Include="SourceFile\Graphics\DX11Device.cpp" />
+    <ClCompile Include="SourceFile\Systems\CameraControlSystem.cpp" />
+    <ClCompile Include="SourceFile\Systems\RenderSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="HeaderFile\Components\Components.h" />
     <ClInclude Include="HeaderFile\Core\Main.h" />
     <ClInclude Include="HeaderFile\Core\Window.h" />
     <ClInclude Include="HeaderFile\ECS\ComponentManager.h" />
@@ -146,6 +149,8 @@
     <ClInclude Include="HeaderFile\ECS\EntityManager.h" />
     <ClInclude Include="HeaderFile\ECS\SystemManager.h" />
     <ClInclude Include="HeaderFile\Graphics\DX11Device.h" />
+    <ClInclude Include="HeaderFile\Systems\CameraControlSystem.h" />
+    <ClInclude Include="HeaderFile\Systems\RenderSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\SimplePixelShader.hlsl">

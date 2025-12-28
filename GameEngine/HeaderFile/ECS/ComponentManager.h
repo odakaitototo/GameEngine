@@ -86,15 +86,29 @@ public:
 
 	}
 
+	T& GetData(Entity entity)
+	{
+		assert(m_entityToIndexMap.find(entity) != m_entityToIndexMap.end() && "Retrieving non-existent component.");
+		return m_componentArray[m_entityToIndexMap[entity]];
+	}
+
+	void EntityDestroyed(Entity entity) override
+	{
+		if (m_entityToIndexMap.find(entity) != m_entityToIndexMap.end())
+		{
+			RemoveData(entity);
+		}
+	}
+
 private:
 	
-	array<T, MAX_ENTITIES> m_componentArray; // 実際のコンポーネントデータ（ここがメモリ上で連続になる！）メモリ上で隙間なく並ぶので超高速
+	std::array<T, MAX_ENTITIES> m_componentArray; // 実際のコンポーネントデータ（ここがメモリ上で連続になる！）メモリ上で隙間なく並ぶので超高速
 
-	unordered_map<Entity, size_t> m_entityToIndexMap; // Entity ID -> 配列インデックスの変換マップ。スパース配列（地図）
+	std::unordered_map<Entity, size_t> m_entityToIndexMap; // Entity ID -> 配列インデックスの変換マップ。スパース配列（地図）
 
-	unordered_map<size_t, Entity> m_indexToEntityMap; // 配列インデックス -> Entity ID の逆引きマップ
+	std::unordered_map<size_t, Entity> m_indexToEntityMap; // 配列インデックス -> Entity ID の逆引きマップ
 
-	size_t m_size = 0; // 現在のデータ数
+	std::size_t m_size = 0; // 現在のデータ数
 };
 
 
@@ -113,7 +127,7 @@ public:
 
 		m_componentTypes[typeName] = m_nextComponentType; // コンポーネントの種類にIDを割り振る
 
-		m_componentArrays.insert({ typeName, make_shared<ComponentArray<T>>() }); // データを格納する配列を作成
+		m_componentArrays.insert({ typeName, std::make_shared<ComponentArray<T>>() }); // データを格納する配列を作成
 
 		m_nextComponentType++;
 	}
@@ -133,6 +147,12 @@ public:
 	void RemoveComponent(Entity entity)
 	{
 		GetComponentArray<T>()->RemoveData(entity);
+	}
+
+	template<typename T>
+	void AddComponent(Entity entity, T component)
+	{
+		GetComponentArray<T>()->InsertData(entity, component);
 	}
 
 	// コンポーネントを取得
@@ -156,16 +176,16 @@ private:
 
 	// 内部ヘルパー：型Tに対応するComponentArrayを取得
 	template<typename T>
-	shared_ptr<ComponentArray<T>> GetComponentArray()
+	std::shared_ptr<ComponentArray<T>> GetComponentArray()
 	{
 		const char* typeName = typeid(T).name();
-		assert(m_componentTypes.find(typeName) != m_componentType.end() && "Component not registered befor use.");
-		return static_pointer_cast<ComponentArray<T>>(m_componentArrays[typeName]);
+		assert(m_componentTypes.find(typeName) != m_componentTypes.end() && "Component not registered before use.");
+		return std::static_pointer_cast<ComponentArray<T>>(m_componentArrays[typeName]);
 	}
 
-	unordered_map<const char*, ComponentType> m_componentTypes; // 型名文字列 -> コンポーネント種類IDのマップ
+	std::unordered_map<const char*, ComponentType> m_componentTypes; // 型名文字列 -> コンポーネント種類IDのマップ
 
-	unordered_map < const char*, shared_ptr<IComponentArray>> m_componentArrays; // 型名文字列 -> コンポーネント配列クラスのマップ
+	std::unordered_map < const char*, std::shared_ptr<IComponentArray>> m_componentArrays; // 型名文字列 -> コンポーネント配列クラスのマップ
 
 	ComponentType m_nextComponentType{}; // 次に割り振るコンポーネント種類ID
 
