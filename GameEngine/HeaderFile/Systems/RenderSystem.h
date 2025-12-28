@@ -53,7 +53,7 @@ public:
 	void Init(DX11Device* device);
 
 	// 描画実行：マイフレーム呼ばれる
-	void Render(Coordinator* coordinator);
+	void Render(Coordinator* coordinator, Entity cameraEntity);
 
 	// 終了処理
 	void Shutdown();

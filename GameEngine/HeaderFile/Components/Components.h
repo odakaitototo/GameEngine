@@ -4,6 +4,10 @@
 // 役割：ECSで使用する全てのコンポーネント(データ構造体)をまとめて定義する場所
 // 作成開始日：2025/12/20
 // 
+// 作成日：2025/12/28
+// 作業内容：#1
+// 　　　追加：Cameraの定義
+// 
 // 
 // 
 // 
@@ -77,4 +81,26 @@ struct Mesh
 	//三角形や四角形など頂点の数かかわるので、
 	//初めにサイズを決めないといけない普通の配列Vertices vertices[]よりvectorの方が良い
 	vector<Vertex> Vertices;
+};
+
+// #1:Camera Component
+// 役割：視野角やクリップ距離など、カメラのレンズ設定のデータ
+// ※位置や向きは Transform コンポーネントの方を使います
+
+struct Camera
+{
+	float Fov; // 視野角（Field of View）
+	float NearClip; // どのくらい近くまで見えるか
+	float FarClip; // どのくらい遠くまで見えるか
+	float AspectRatio; // 画面の縦横比
+
+	Camera()
+	{
+		Fov = XMConvertToRadians(60.0f); // 標準的な60度
+		NearClip = 0.1f;
+		FarClip = 1000.0f;
+		AspectRatio = 1280.0f / 720.0f; // 16:9
+	}
+
+
 };

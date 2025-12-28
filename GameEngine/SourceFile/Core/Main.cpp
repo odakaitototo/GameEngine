@@ -15,6 +15,10 @@
 // 作業内容：#3
 // 　　　追加：ECS導入によりリニューアル
 // 
+// 作成日：2025/12/28
+// 作業内容：#4
+// 　　　追加：カメラ実装
+// 
 // 
 ////////////////////////////////
 
@@ -61,6 +65,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	// 「このゲームでは　TransformとMeshというデータを使います」と教える
 	gCoordinator.RegisterComponent<Transform>();
 	gCoordinator.RegisterComponent<Mesh>();
+	gCoordinator.RegisterComponent<Camera>(); // Cameraコンポーネントの登録
 
 	// #3:システム（RenderSystem）の登録
 	auto renderSystem = gCoordinator.RegisterSystem<RenderSystem>();
@@ -84,9 +89,9 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	
 	// #3:三角形の頂点データ
 	std::vector<Vertex> triangleVertices = {
-		{ 0.0f, 0.5f, 0.0f }, //上
-		{ 0.5f, -0.5f, 0.0f }, // 右下
-		{ -0.5f, -0.5f, 0.0f } // 左下
+		{ 0.0f, 0.2f, 0.0f }, //上
+		{ 0.2f, -0.2f, 0.0f }, // 右下
+		{ -0.2f, -0.2f, 0.0f } // 左下
 	};
 
 	// #3:Entityを1つ作成
@@ -100,6 +105,24 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	mesh.Vertices = triangleVertices;
 	gCoordinator.AddComponent(myEntity, mesh);
 
+	////////////////////////////
+	// 
+	// #4:カメラエンティティの作成
+	// 
+	////////////////////////////
+
+	Entity cameraEntity = gCoordinator.CreateEntity();
+
+	// 位置設定:Z = -5.0f (三角形より後ろに下がる)
+	Transform cameraTransform;
+	cameraTransform.Position = XMFLOAT3(0.0f, 0.0f, -2.0f);
+	cameraTransform.Rotation = XMFLOAT3(0.0f, 0.0f, 0.0f);
+
+	gCoordinator.AddComponent(cameraEntity, cameraTransform);
+
+	// カメラ設定：今回はデフォルト設定のまま
+	gCoordinator.AddComponent(cameraEntity, Camera());
+
 
 
 
@@ -112,7 +135,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 
 		// #3:ECSによる描画
 		// システムに「仕事して！」と指示するだけ
-		renderSystem->Render(&gCoordinator);
+		renderSystem->Render(&gCoordinator, cameraEntity);
 
 		// ここに将来以下の処理が入ります
 		// Game.Update();
@@ -121,5 +144,6 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		// #1：描画終了（画面を更新）
 		dx11.End();
 	}
+	renderSystem->Shutdown();
 	return 0;
 }

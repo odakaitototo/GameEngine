@@ -6,9 +6,9 @@
 // 
 // 作成開始日：2025/12/21
 // 
-// 作成日：2025/12/23
+// 作成日：2025/12/28
 // 　　作業内容：#1
-// 　　　　　追加：
+// 　　　　　追加：カメラ行列の計算
 // 
 // 
 // 
@@ -64,7 +64,7 @@ void RenderSystem::Init(DX11Device* device)
 	m_device->GetDevice()->CreateBuffer(&cbd, nullptr, &m_constantBuffer);
 }
 
-void RenderSystem::Render(Coordinator* coordinator)
+void RenderSystem::Render(Coordinator* coordinator, Entity cameraEntity)
 {
 	// 描画の共通設定（シェーダーやレイアウトなど）
 	// 同じシェーダーを使うなら、ループの外で1回セットすれば効率がいい
@@ -75,74 +75,90 @@ void RenderSystem::Render(Coordinator* coordinator)
 
 	m_context->VSSetConstantBuffers(0, 1, &m_constantBuffer);// #1:シェーダーの定数バッファスロット0番にセット
 
-	// #1:カメラ行列の計算（View,Projection）
-	// 本来はCameraSystem等で管理しますが、今は子オデ簡易作成します
+	    /////////////////////////////////////////
+		// 
+		// #1:カメラ行列（View / projection）の計算
+		// 
+		/////////////////////////////////////////
 
-	// #1:ビュー行列：カメラの向きと位置
-	XMVECTOR eyePos = XMVectorSet(0.0f, 0.0f, -2.0f, 0.0f); // カメラは手前(Z=-2)に置く
-	XMVECTOR focusPos = XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f); // 原点を見る
-	XMVECTOR upDir = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f); // 上方向はY軸
-	XMMATRIX viewMatrix = XMMatrixLookAtLH(eyePos, focusPos, upDir);
+		// カメラエンティティからコンポーネントを取得
+	auto& cameraTransform = coordinator->GetComponent<Transform>(cameraEntity);
+	auto& cameraComponent = coordinator->GetComponent<Camera>(cameraEntity);
 
-	// #1:プロジェクション行列：遠近感の設定
-	// 画角60度、アスペクト比16：9、手前0.1f～奥100.0fまで見える
-	XMMATRIX projMatrix = XMMatrixPerspectiveFovLH(XMConvertToRadians(60.0f), 1280.0f / 720.0f, 0.1f, 100.0f);
+	// View行列（カメラの位置、向き）の計算
+	// カメラの「ワールド行列」を作って、その「逆行列」を求めるとViewf行列になります
 
-	// ---Entityごとの描画ループ---
-	// 三角形を回転させるために、時間を取得（簡易的なカウンター）
+	// 回転行列（ピッチ、ヨー、ロール）
+	XMMATRIX cameraRot = XMMatrixRotationRollPitchYaw(
+		cameraTransform.Rotation.x,
+		cameraTransform.Rotation.y,
+		cameraTransform.Position.z
+	);
+	// 並行行列移動
+	XMMATRIX cameraTrans = XMMatrixTranslation(
+		cameraTransform.Position.x,
+		cameraTransform.Position.y,
+		cameraTransform.Position.z
+	);
+
+	// カメラワールド行列 = 回転＊移動
+	XMMATRIX cameraWorld = cameraRot * cameraTrans;
+
+	// View行列 = カメラワールド行列の「逆行列(Inverse)」
+	XMMATRIX viewMatrix = XMMatrixInverse(nullptr, cameraWorld);
+
+	// Projection行列（レンズ）の計算
+	XMMATRIX projectionMatrix = XMMatrixPerspectiveFovLH(
+		cameraComponent.Fov,
+		cameraComponent.AspectRatio,
+		cameraComponent.NearClip,
+		cameraComponent.FarClip
+	);
+
+	// --- Entityごとの描画ループ ---
 	static float time = 0.0f;
-	time += 0.005f; // #1:毎フレーム少しずつ増やす
+	time += 0.005f;
 
-// m_entitiesには「MeshとTransformを持ってるEntity」だけが自動的に入っている
 	for (auto const& entity : m_entities)
 	{
-		// そのEntityのデータ（Component）を取得
 		auto& transform = coordinator->GetComponent<Transform>(entity);
 		auto& mesh = coordinator->GetComponent<Mesh>(entity);
 
-		// #1:ワールド行列の計算(World)
-
-		// #1:回転（Y軸回転）：timeを使ってクルクル回す
+		// --- ワールド行列の計算 ---
+		// 今回はテスト用にY軸回転させつつ、Transformの位置も反映させる
 		XMMATRIX worldMatrix = XMMatrixRotationY(time);
 
-		// #1:もしEntityの位置(transform.Positino)を使いたければこう合成いします：
-		// worldMatrix = worldMatrix * XMMatrixTranslation(transform.Position.x,...);
+		// EntityのTransform位置へ移動
+		worldMatrix *= XMMatrixTranslation(
+			transform.Position.x,
+			transform.Position.y,
+			transform.Position.z
+		);
 
-		// #1:定数バッファの更新
+		// --- 定数バッファの更新 ---
 		ConstantBufferData cb;
-		// #1:DirectXMathの行列は転置（Transpose）してGPUに送るルールがあります
 		cb.World = XMMatrixTranspose(worldMatrix);
-		cb.View = XMMatrixTranspose(viewMatrix);
-		cb.Projection = XMMatrixTranspose(projMatrix);
+		cb.View = XMMatrixTranspose(viewMatrix); // さっき計算したView行列
+		cb.Projection = XMMatrixTranspose(projectionMatrix); // さっき計算したProjection行列
 
-		m_context->UpdateSubresource(m_constantBuffer, 0, nullptr, &cb, 0, 0); // #1:GPUのメモリを更新
+		m_context->UpdateSubresource(m_constantBuffer, 0, nullptr, &cb, 0, 0);
 
-		// 頂点バッファの準備
-		// 「このEntity用のバッファはもう作ったことある？」と確認
+		// --- 描画 ---
 		if (m_vertexBuffers.find(entity) == m_vertexBuffers.end())
 		{
-			// まだないなら作る（初回のみ実装される：遅延初期化）
 			ID3D11Buffer* buffer = nullptr;
-
-			// Meshコンポーネントには入っている頂点データを使ってバッファ作成
-			// vectorの先頭ポインタは ,data()でとれる
 			m_device->CreateVertexBuffer(mesh.Vertices.data(), (UINT)(sizeof(Vertex) * mesh.Vertices.size()), &buffer);
-
-			// 地図に登録
 			m_vertexBuffers[entity] = buffer;
 		}
-
-		// 描画コマンド発行
 		ID3D11Buffer* vBuffer = m_vertexBuffers[entity];
 		UINT stride = sizeof(Vertex);
 		UINT offset = 0;
-
-		// 頂点バッファをセット
 		m_context->IASetVertexBuffers(0, 1, &vBuffer, &stride, &offset);
 
-		// 描画（頂点の数だけ書く）
 		m_context->Draw((UINT)mesh.Vertices.size(), 0);
 	}
+	
+	
 }
 
 
