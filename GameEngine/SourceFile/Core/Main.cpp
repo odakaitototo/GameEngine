@@ -19,6 +19,10 @@
 // 作業内容：#4
 // 　　　追加：カメラ実装
 // 
+// 作成日：2025/12/28
+// 作業内容：#5
+// 　　　追加：カメラのキー入力移動
+// 
 // 
 ////////////////////////////////
 
@@ -34,6 +38,9 @@
 #include "ECS//Coordinator.h"
 #include "Components/Components.h"
 #include "Systems/RenderSystem.h"
+
+// #5:カメラキー入力移動に必要なヘッダー
+#include "systems/CameraControlSystem.h"
 
 
 // #3:グローバル変数としてCoordinatorを用意（どこからでもアクセスできるようにするため）
@@ -69,6 +76,16 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 
 	// #3:システム（RenderSystem）の登録
 	auto renderSystem = gCoordinator.RegisterSystem<RenderSystem>();
+
+	// #5:カメラ操作システムの登録
+	auto cameraControlSystem = gCoordinator.RegisterSystem<CameraControlSystem>();
+
+	{
+		Signature signature;
+		signature.set(gCoordinator.GetComponentType<Transform>());
+		signature.set(gCoordinator.GetComponentType<Camera>());
+		gCoordinator.SetSystemSignature<CameraControlSystem>(signature);
+	}
 
 	// #3:システムが担当する条件（シグネチャ）を設定
 	// 「RenderSystemは、TransformとMeshの両方を持っているEntityだけを扱うよ」という設定
@@ -129,6 +146,8 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	// メインループ
 	while (window.ProcessMessage())
 	{
+		// #5:カメラ操作の更新（描画の前にやる）
+		cameraControlSystem->Update(&gCoordinator);
 
 		// #1：描画開始（画面を濃い青色でクリア）
 		dx11.Begin(0.1f, 0.2f, 0.1f); // ウィンドウの色設定

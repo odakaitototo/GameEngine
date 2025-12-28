@@ -60,6 +60,9 @@
     <ClCompile Include="SourceFile\Systems\RenderSystem.cpp">
       <Filter>ソース ファイル\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFile\Systems\CameraControlSystem.cpp">
+      <Filter>ソース ファイル\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HeaderFile\Graphics\DX11Device.h">
@@ -90,6 +93,9 @@
       <Filter>ヘッダー ファイル\Components</Filter>
     </ClInclude>
     <ClInclude Include="HeaderFile\Systems\RenderSystem.h">
+      <Filter>ヘッダー ファイル\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="HeaderFile\Systems\CameraControlSystem.h">
       <Filter>ヘッダー ファイル\Systems</Filter>
     </ClInclude>
   </ItemGroup>

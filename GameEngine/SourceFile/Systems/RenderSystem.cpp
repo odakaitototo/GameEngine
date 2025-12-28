@@ -92,7 +92,7 @@ void RenderSystem::Render(Coordinator* coordinator, Entity cameraEntity)
 	XMMATRIX cameraRot = XMMatrixRotationRollPitchYaw(
 		cameraTransform.Rotation.x,
 		cameraTransform.Rotation.y,
-		cameraTransform.Position.z
+		cameraTransform.Rotation.z
 	);
 	// ï¿çsçsóÒà⁄ìÆ
 	XMMATRIX cameraTrans = XMMatrixTranslation(
@@ -129,7 +129,7 @@ void RenderSystem::Render(Coordinator* coordinator, Entity cameraEntity)
 		XMMATRIX worldMatrix = XMMatrixRotationY(time);
 
 		// EntityÇÃTransformà íuÇ÷à⁄ìÆ
-		worldMatrix *= XMMatrixTranslation(
+		 worldMatrix = XMMatrixTranslation(
 			transform.Position.x,
 			transform.Position.y,
 			transform.Position.z
