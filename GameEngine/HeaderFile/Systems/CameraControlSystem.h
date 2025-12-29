@@ -33,8 +33,8 @@ public:
 	// coordinator: コンポーネント取得用
 	// deltaTime:前のフレームから経過時間（移動量を一定にするため）...今回は簡易的に固定値を使います
 
-	void Update(Coordinator* coordinator);
+	void Update(Coordinator* coordinator, float deltaTime);
 
 private:
-	float speed = 0.05f; // 移動スピード
+	float speed = 0.01f; // 移動スピード
 };

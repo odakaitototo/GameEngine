@@ -23,6 +23,10 @@
 // 作業内容：#5
 // 　　　追加：カメラのキー入力移動
 // 
+// 作成日：2025/12/29
+// 作業内容：#6
+// 　　　追加：タイマーの実装
+// 
 // 
 ////////////////////////////////
 
@@ -41,6 +45,9 @@
 
 // #5:カメラキー入力移動に必要なヘッダー
 #include "systems/CameraControlSystem.h"
+
+// #6:ゲームタイマーに必要なヘッダー
+#include "Core/GameTimer.h"
 
 
 // #3:グローバル変数としてCoordinatorを用意（どこからでもアクセスできるようにするため）
@@ -67,6 +74,10 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	}
 
 	gCoordinator.Init();
+
+	// #6:タイマーの初期化と作成
+	GameTimer timer;
+	timer.Reset();
 
 	// #3:コンポーネントの登録
 	// 「このゲームでは　TransformとMeshというデータを使います」と教える
@@ -134,11 +145,14 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	Transform cameraTransform;
 	cameraTransform.Position = XMFLOAT3(0.0f, 0.0f, -2.0f);
 	cameraTransform.Rotation = XMFLOAT3(0.0f, 0.0f, 0.0f);
-
 	gCoordinator.AddComponent(cameraEntity, cameraTransform);
 
-	// カメラ設定：今回はデフォルト設定のまま
-	gCoordinator.AddComponent(cameraEntity, Camera());
+	Camera cameraComp;
+	// #6:ここで計算
+	cameraComp.AspectRatio = (float)SCREEEN_WIDTH / (float)SCREEN_HEIGHT;
+	gCoordinator.AddComponent(cameraEntity, cameraComp);
+
+	
 
 
 
@@ -146,8 +160,16 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	// メインループ
 	while (window.ProcessMessage())
 	{
+
+		// 時間計算
+		timer.Tick();
+		float dt = timer.DeltaTime();
+
+		// カメラ更新(ｄｔを渡す)
+		cameraControlSystem->Update(&gCoordinator, dt);
+	
 		// #5:カメラ操作の更新（描画の前にやる）
-		cameraControlSystem->Update(&gCoordinator);
+		cameraControlSystem->Update(&gCoordinator, cameraEntity);
 
 		// #1：描画開始（画面を濃い青色でクリア）
 		dx11.Begin(0.1f, 0.2f, 0.1f); // ウィンドウの色設定
