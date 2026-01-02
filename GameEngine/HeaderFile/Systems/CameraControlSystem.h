@@ -36,5 +36,5 @@ public:
 	void Update(Coordinator* coordinator, float deltaTime);
 
 private:
-	float speed = 0.01f; // 移動スピード
+	float speed = 4.0f; // 移動スピード
 };

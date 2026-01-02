@@ -25,6 +25,10 @@
 #include "ECS/Coordinator.h"
 #include "Components/Components.h"
 
+#include "Core/Input.h"
+
+extern Input gInput;
+
 void CameraControlSystem::Update(Coordinator* coordinator, float deltaTime)
 {
 	// 登録されているすべてのカメラ（通常は1つ）に対して処理
@@ -41,37 +45,37 @@ void CameraControlSystem::Update(Coordinator* coordinator, float deltaTime)
 		// 0x8000は現在押されているというフラグです
 
 		// Qキー：前へ（Zプラス）※カメラの向きによって変わりますが、今は単純にZ軸移動
-		if (GetAsyncKeyState('Q') & 0x8000)
+		if (gInput.GetKey('Q'))
 		{
 			transform.Position.z += moveSpeed;
 		}
 
 		// Eキー：後ろへ（Zマイナス）
-		if (GetAsyncKeyState('E') & 0x8000)
+		if (gInput.GetKey('E'))
 		{
 			transform.Position.z -= moveSpeed;
 		}
 
 		// Dキー：右へ（Xプラス）
-		if (GetAsyncKeyState('D') & 0x8000)
+		if (gInput.GetKey('D'))
 		{
 			transform.Position.x -= moveSpeed;
 		}
 
 		// Aキー：左へ（Xマイナス）
-		if (GetAsyncKeyState('A') & 0x8000)
+		if (gInput.GetKey('A'))
 		{
 			transform.Position.x += moveSpeed;
 		}
 
 		// Sキー：下降」（Yプラス）
-		if (GetAsyncKeyState('S') & 0x8000)
+		if (gInput.GetKey('S'))
 		{
 			transform.Position.y += moveSpeed;
 		}
 
 		// Wキー：上昇（Yマイナス）
-		if (GetAsyncKeyState('W') & 0x8000)
+		if (gInput.GetKey('W'))
 		{
 			transform.Position.y -= moveSpeed;
 		}

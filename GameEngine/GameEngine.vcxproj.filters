@@ -66,6 +66,12 @@
     <ClCompile Include="SourceFile\Core\GameTimer.cpp">
       <Filter>ソース ファイル\Core</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFile\Core\Input.cpp">
+      <Filter>ソース ファイル\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFile\Core\OBJLoader.cpp">
+      <Filter>ソース ファイル\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HeaderFile\Graphics\DX11Device.h">
@@ -103,6 +109,15 @@
     </ClInclude>
     <ClInclude Include="HeaderFile\Core\GameTimer.h">
       <Filter>ヘッダー ファイル\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="HeaderFile\Core\Input.h">
+      <Filter>ヘッダー ファイル\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="HeaderFile\Core\OBJLoader.h">
+      <Filter>ヘッダー ファイル\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="HeaderFile\Systems\Rotationsystem.h">
+      <Filter>ヘッダー ファイル\Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

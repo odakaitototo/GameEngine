@@ -27,6 +27,14 @@
 // 作業内容：#6
 // 　　　追加：タイマーの実装
 // 
+// 作成日：2025/12/29
+// 作業内容：#7
+// 　　　追加：Inputシステムの追加
+// 
+// 作成日：2025/12/31
+// 作業内容：#8
+//       追加：オブジェクト表示
+// 
 // 
 ////////////////////////////////
 
@@ -49,9 +57,19 @@
 // #6:ゲームタイマーに必要なヘッダー
 #include "Core/GameTimer.h"
 
+// #7:インプットクラスに必要なヘッダー
+#include "Core/Input.h"
+
+// #8:オブジェクト表示に必要なヘッダー
+#include "Core/OBJLoader.h"
+#include "Systems/RenderSystem.h"
+
+// #9 オブジェクトの回転に必要なヘッダー
+#include "Systems/Rotationsystem.h"
 
 // #3:グローバル変数としてCoordinatorを用意（どこからでもアクセスできるようにするため）
 Coordinator gCoordinator;
+Input gInput; // どこからでも使える入力管理者
 
 
 
@@ -74,6 +92,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	}
 
 	gCoordinator.Init();
+	gInput.Init(); // #7:入力システムの初期化
 
 	// #6:タイマーの初期化と作成
 	GameTimer timer;
@@ -98,6 +117,9 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		gCoordinator.SetSystemSignature<CameraControlSystem>(signature);
 	}
 
+	// #8:回転システムの登録
+	auto rotationSystem = gCoordinator.RegisterSystem<RotationSystem>();
+
 	// #3:システムが担当する条件（シグネチャ）を設定
 	// 「RenderSystemは、TransformとMeshの両方を持っているEntityだけを扱うよ」という設定
 	{
@@ -115,12 +137,39 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	// 
 	///////////////////////////////////////////////
 	
-	// #3:三角形の頂点データ
-	std::vector<Vertex> triangleVertices = {
-		{ 0.0f, 0.2f, 0.0f }, //上
-		{ 0.2f, -0.2f, 0.0f }, // 右下
-		{ -0.2f, -0.2f, 0.0f } // 左下
-	};
+	std::vector<Vertex> meshVertices; // 手打ちデータを消し、OBJ読み込み用のvectorを用意
+
+	if (!OBJLoader::Load("C:\\cube.obj", meshVertices))
+	{
+		MessageBox(NULL, L"cube.obj Load Failed", L"Error", MB_OK);
+		return - 1;
+	}
+
+	if (meshVertices.empty())
+	{
+		MessageBox(NULL, L"Mesh Vertices is Empty! (0)", L"Error", MB_OK);
+		return -1;
+	}
+
+	for (int i = 0; i < 5; ++i) //ループを使って5個のEntityを作る
+	{
+		// 1. Entity（ID）を発行
+		Entity box = gCoordinator.CreateEntity();
+
+		// 2. 位置（Transform）を設定
+		Transform trans;
+		// X座標をずらして横一列に並べる ( -4.0, -2.0, 0.0, 2.0, 4.0 )
+		trans.Position = XMFLOAT3((float)(i - 2) * 2.5f, 0.0f, 0.0f);
+		trans.Rotation = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		trans.Scale = XMFLOAT3(1.0f, 1.0f, 1.0f);
+		gCoordinator.AddComponent(box, trans);
+
+		// 3. 形（Mesh）を設定
+		Mesh mesh;
+		mesh.Vertices = meshVertices; // 読み込んだデータをコピーして渡す
+		gCoordinator.AddComponent(box, mesh);
+	}
+
 
 	// #3:Entityを1つ作成
 	Entity myEntity = gCoordinator.CreateEntity();
@@ -130,7 +179,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 
 	// #3:形状情報（Mesh）を追加
 	Mesh mesh;
-	mesh.Vertices = triangleVertices;
+	mesh.Vertices = meshVertices;
 	gCoordinator.AddComponent(myEntity, mesh);
 
 	////////////////////////////
@@ -165,11 +214,16 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		timer.Tick();
 		float dt = timer.DeltaTime();
 
+		// #7:入力情報の更新
+		gInput.Update();
+
 		// カメラ更新(ｄｔを渡す)
 		cameraControlSystem->Update(&gCoordinator, dt);
+
+		rotationSystem->Update(&gCoordinator, dt);
 	
 		// #5:カメラ操作の更新（描画の前にやる）
-		cameraControlSystem->Update(&gCoordinator, cameraEntity);
+		//cameraControlSystem->Update(&gCoordinator, cameraEntity);
 
 		// #1：描画開始（画面を濃い青色でクリア）
 		dx11.Begin(0.1f, 0.2f, 0.1f); // ウィンドウの色設定
