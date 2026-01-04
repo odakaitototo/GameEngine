@@ -8,6 +8,11 @@
 // 作成日：2025/12/30
 // 作業内容：#1
 // 　　　追加：色データの受け渡しをできるようにする
+//
+// 作成日：2026/01/03
+// 作業内容：#2
+// 　　　追加：法線データの受け渡しをできるようにする
+// 
 // 
 // 
 // 
@@ -29,6 +34,7 @@ struct PS_INPUT
 {
     float4 pos : SV_POSITION;
     float4 color : COLOR; // #1:頂点シェーダーから色を受け取る
+    float3 normal : NORMAL; // #2:法線を受け取る
 };
 
 
@@ -36,6 +42,7 @@ struct PS_INPUT
 // 戻り値：float4->これが最終的な「画素の色（R,G,B,A）」になります。
 float4 main(PS_INPUT input) : SV_TARGET
 {
-    return input.color; // #1:受け取った色をそのまま画面に出す
-
+    
+    
+    return input.color;
 }

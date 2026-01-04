@@ -6,7 +6,9 @@
 // 
 // 作成開始日：2025/12/30
 // 
-// 作成日：2025/
+// 作成日：2025/01/03
+// 作成内容：#1
+// 　　　追加：法線データの追加
 // 
 // 
 // 
@@ -61,6 +63,9 @@ bool OBJLoader::Load(const char* filename, std::vector<Vertex>& outVertices)
 			// 色は白で統一
 			Vertex v;
 			v.r = 1.0f; v.g = 1.0f; v.b = 1.0f; v.a = 1.0f;
+
+			// #1:法線の初期化（とりあえず上向きにしておく）
+			v.nx = 0.0f; v.ny = 1.0f; v.nz = 0.0f;
 
 			// 三角形の3頂点を作成して追加
 			v.x = positions[v1].x; v.y = positions[v1].y; v.z = positions[v1].z;
