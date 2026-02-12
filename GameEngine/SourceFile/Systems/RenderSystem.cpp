@@ -57,7 +57,7 @@ void RenderSystem::Init(DX11Device* device)
 	D3D11_BUFFER_DESC cbd = { 0 };
 	cbd.ByteWidth = sizeof(ConstantBufferData); // バッファサイズ
 	cbd.Usage = D3D11_USAGE_DEFAULT; // CPUから書き換える標準的な設定
-	cbd.BindFlags = D3D10_BIND_CONSTANT_BUFFER; // 「これは定数バッファです」
+	cbd.BindFlags = D3D11_BIND_CONSTANT_BUFFER; // 「これは定数バッファです」
 	cbd.CPUAccessFlags = 0;
 
 	// デバイスを使ってバッファ作成（初期化データなしでOK）

@@ -149,6 +149,7 @@
     <ClInclude Include="HeaderFile\ECS\EntityManager.h" />
     <ClInclude Include="HeaderFile\ECS\SystemManager.h" />
     <ClInclude Include="HeaderFile\Graphics\DX11Device.h" />
+    <ClInclude Include="HeaderFile\Graphics\GeometryGenerator.h" />
     <ClInclude Include="HeaderFile\Systems\CameraControlSystem.h" />
     <ClInclude Include="HeaderFile\Systems\RenderSystem.h" />
   </ItemGroup>

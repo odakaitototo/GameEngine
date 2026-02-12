@@ -23,6 +23,9 @@
 // 作業内容：#5
 // 　　　追加：カメラのキー入力移動
 // 
+// 作成日：2025/02/10
+// 作業内容：#6
+//       追加：ジオメトリ生成関数の追加（立方体の呼び出し）
 // 
 ////////////////////////////////
 
@@ -33,6 +36,7 @@
 #include "Core/Window.h"
 #include "Core/Main.h"
 #include "Graphics/DX11Device.h" // 描画するためのもの
+#include "Graphics/GeometryGenerator.h" // ジオメトリ生成するためのもの
 
 // #3:ECS関連のヘッダー
 #include "ECS//Coordinator.h"
@@ -40,8 +44,7 @@
 #include "Systems/RenderSystem.h"
 
 // #5:カメラキー入力移動に必要なヘッダー
-#include "systems/CameraControlSystem.h"
-
+#include "Systems/CameraControlSystem.h"
 
 // #3:グローバル変数としてCoordinatorを用意（どこからでもアクセスできるようにするため）
 Coordinator gCoordinator;
@@ -103,24 +106,38 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	// #3:ゲームオブジェクト（Entity）の作成テスト
 	// 
 	///////////////////////////////////////////////
-	
-	// #3:三角形の頂点データ
-	std::vector<Vertex> triangleVertices = {
-		{ 0.0f, 0.2f, 0.0f }, //上
-		{ 0.2f, -0.2f, 0.0f }, // 右下
-		{ -0.2f, -0.2f, 0.0f } // 左下
-	};
 
-	// #3:Entityを1つ作成
+	// #6:Entityを1つ作成
 	Entity myEntity = gCoordinator.CreateEntity();
 
-	// #3:位置情報（Transform）を追加
+	// #6:位置情報（Transeform）を追加
 	gCoordinator.AddComponent(myEntity, Transform());
 
-	// #3:形状情報（Mesh）を追加
+	// #6:形状情報（Mesh）を追加
 	Mesh mesh;
-	mesh.Vertices = triangleVertices;
+
+	// #6:直接頂点を書く代わりに、関数を呼び出して立方体を取得します
+	mesh.Vertices = GeometoryGenerator::CreateCube(1.0f);
+
 	gCoordinator.AddComponent(myEntity, mesh);
+	
+	// #3:三角形の頂点データ
+	//std::vector<Vertex> triangleVertices = {
+	//	{ 0.0f, 0.2f, 0.0f }, //上
+	//	{ 0.2f, -0.2f, 0.0f }, // 右下
+	//	{ -0.2f, -0.2f, 0.0f } // 左下
+	//};
+
+	// #3:Entityを1つ作成
+	//Entity myEntity = gCoordinator.CreateEntity();
+
+	// #3:位置情報（Transform）を追加
+	//gCoordinator.AddComponent(myEntity, Transform());
+
+	// #3:形状情報（Mesh）を追加
+	/*Mesh mesh;
+	mesh.Vertices = triangleVertices;
+	gCoordinator.AddComponent(myEntity, mesh);*/
 
 	////////////////////////////
 	// 

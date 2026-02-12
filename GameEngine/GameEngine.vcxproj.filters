@@ -98,6 +98,9 @@
     <ClInclude Include="HeaderFile\Systems\CameraControlSystem.h">
       <Filter>ヘッダー ファイル\Systems</Filter>
     </ClInclude>
+    <ClInclude Include="HeaderFile\Graphics\GeometryGenerator.h">
+      <Filter>ヘッダー ファイル\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\SimpleVertexShader.hlsl">

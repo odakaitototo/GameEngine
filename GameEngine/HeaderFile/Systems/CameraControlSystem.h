@@ -36,5 +36,6 @@ public:
 	void Update(Coordinator* coordinator);
 
 private:
-	float speed = 0.05f; // 移動スピード
+
+	float speed = 0.05f; // 移動スピード：現在の移動スピードは0.05
 };
