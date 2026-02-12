@@ -107,6 +107,7 @@
     <ClInclude Include="HeaderFile\Systems\CameraControlSystem.h">
       <Filter>ヘッダー ファイル\Systems</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="HeaderFile\Core\GameTimer.h">
       <Filter>ヘッダー ファイル\Core</Filter>
     </ClInclude>
@@ -118,6 +119,10 @@
     </ClInclude>
     <ClInclude Include="HeaderFile\Systems\Rotationsystem.h">
       <Filter>ヘッダー ファイル\Systems</Filter>
+=======
+    <ClInclude Include="HeaderFile\Graphics\GeometryGenerator.h">
+      <Filter>ヘッダー ファイル\Graphics</Filter>
+>>>>>>> c7954a2b2189a89db2a31026260ab2002fb48765
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

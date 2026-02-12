@@ -40,6 +40,7 @@
 
 
 #include "Graphics/DX11Device.h"
+#include "Components/Components.h"
 
 //////////////////
 // コンストラクタ

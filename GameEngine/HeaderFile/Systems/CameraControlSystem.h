@@ -36,5 +36,10 @@ public:
 	void Update(Coordinator* coordinator, float deltaTime);
 
 private:
+<<<<<<< HEAD
 	float speed = 4.0f; // 移動スピード
+=======
+
+	float speed = 0.05f; // 移動スピード：現在の移動スピードは0.05
+>>>>>>> c7954a2b2189a89db2a31026260ab2002fb48765
 };

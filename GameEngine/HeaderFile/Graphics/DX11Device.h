@@ -50,12 +50,17 @@ using namespace DirectX; // XMFLOAT3を使うため
 
 /* #2:頂点データの型定義
    シェーダーのVS_INPUT構造体と意味を合わせる必要がある*/
+<<<<<<< HEAD
 struct Vertex
 {
 	float x, y, z; // #2:位置座標
 	float r, g, b, a; // #3:色
 	float nx, ny, nz; // #4:法線（Normal）
 };
+=======
+struct Vertex;
+
+>>>>>>> c7954a2b2189a89db2a31026260ab2002fb48765
 
 
 class DX11Device

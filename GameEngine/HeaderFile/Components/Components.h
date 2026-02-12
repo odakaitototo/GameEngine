@@ -8,6 +8,10 @@
 // 作業内容：#1
 // 　　　追加：Cameraの定義
 // 
+// 作成日：2026/02/10
+// 作業内容：#2
+//     追加：Vertex（頂点データ）の定義をDX11Device.hから移動させた。
+// 
 // 
 // 
 // 
@@ -42,6 +46,25 @@ using namespace std;
 using namespace DirectX;
 
 
+
+
+
+
+/////////////////////////////////////////////////////
+// #2
+// Vertex Component
+// 役割：頂点データ
+// 
+/////////////////////////////////////////////////////
+
+struct Vertex
+{
+	XMFLOAT3 Position;
+
+	Vertex() : Position(0,0,0){}
+	Vertex(float x, float y, float z) : Position(x,y,z){}
+	Vertex(XMFLOAT3 pos) : Position(pos){}
+};
 
 
 /////////////////////////////////////////////////////
@@ -101,6 +124,4 @@ struct Camera
 		FarClip = 1000.0f;
 		AspectRatio = 1280.0f / 720.0f; // 16:9
 	}
-
-
 };
