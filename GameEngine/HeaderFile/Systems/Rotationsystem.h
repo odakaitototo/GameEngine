@@ -47,7 +47,7 @@ public:
 			// 360度を超えたら0に戻す（オーバーフロー防止）
 			if (transform.Rotation.y > 6.28f)
 			{
-				transform.Rotation.y -= 6.28;
+				transform.Rotation.y -= 6.28f;
 			}
 		}
 	}

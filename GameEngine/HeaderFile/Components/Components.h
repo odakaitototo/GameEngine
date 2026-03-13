@@ -40,8 +40,6 @@
 #include <DirectXMath.h> // 数学ライブラリ
 #include <vector> // 可変長配列（std::vectorを使うため）
 
-#include "Graphics/DX11Device.h" // Vector構造体を使うため
-
 using namespace std;
 using namespace DirectX;
 
@@ -59,11 +57,9 @@ using namespace DirectX;
 
 struct Vertex
 {
-	XMFLOAT3 Position;
-
-	Vertex() : Position(0,0,0){}
-	Vertex(float x, float y, float z) : Position(x,y,z){}
-	Vertex(XMFLOAT3 pos) : Position(pos){}
+	float x, y, z;    // 位置座標
+	float r, g, b, a; // 色
+	float nx, ny, nz; // 法線
 };
 
 
