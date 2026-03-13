@@ -168,7 +168,11 @@ void RenderSystem::Shutdown()
 	// 作ったバッファを全消去
 	for (auto const& pair : m_vertexBuffers)
 	{
-		pair.second->Release();
+		if (pair.second)
+		{
+			pair.second->Release();
+		}
+		
 	}
 	m_vertexBuffers.clear();
 

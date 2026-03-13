@@ -133,7 +133,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SourceFile\Core\GameTimer.cpp" />
+    <ClCompile Include="SourceFile\Core\Input.cpp" />
     <ClCompile Include="SourceFile\Core\Main.cpp" />
+    <ClCompile Include="SourceFile\Core\OBJLoader.cpp" />
     <ClCompile Include="SourceFile\Core\Window.cpp" />
     <ClCompile Include="SourceFile\Graphics\DX11Device.cpp" />
     <ClCompile Include="SourceFile\Systems\CameraControlSystem.cpp" />
@@ -141,7 +144,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HeaderFile\Components\Components.h" />
+    <ClInclude Include="HeaderFile\Core\GameTimer.h" />
+    <ClInclude Include="HeaderFile\Core\Input.h" />
     <ClInclude Include="HeaderFile\Core\Main.h" />
+    <ClInclude Include="HeaderFile\Core\OBJLoader.h" />
     <ClInclude Include="HeaderFile\Core\Window.h" />
     <ClInclude Include="HeaderFile\ECS\ComponentManager.h" />
     <ClInclude Include="HeaderFile\ECS\Coordinator.h" />
@@ -152,6 +158,7 @@
     <ClInclude Include="HeaderFile\Graphics\GeometryGenerator.h" />
     <ClInclude Include="HeaderFile\Systems\CameraControlSystem.h" />
     <ClInclude Include="HeaderFile\Systems\RenderSystem.h" />
+    <ClInclude Include="HeaderFile\Systems\Rotationsystem.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\SimplePixelShader.hlsl">

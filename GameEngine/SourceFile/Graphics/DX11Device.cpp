@@ -15,6 +15,10 @@
 // 作業内容：#2
 // 　　　追加：頂点バッファとインプットレイアウトの作成
 // 
+// 作成日：2025/01/03
+// 作成内容：#3
+// 　　　追加：法線データの追加
+// 
 // 
 // 
 // 
@@ -232,9 +236,23 @@ bool DX11Device::CreateInputLayout(ID3DBlob* vsBlob, ID3D11InputLayout** outLayo
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
 		// SemanticName, SemanticIndex, Format, InputSlot, AlignedByteOffset,
+
+        // 1つ目：位置情報
 		{
 			"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0
 		},
+
+		// #2:2つ目：色情報
+		// AlignedByteOffsetが12なのは、前のデータ(float3つ分 = 4byte*3)の後ろにあるから
+		{
+			"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0
+        },
+
+		// #3:法線（NORMAL）を追加
+		//　前のデータ（pos:12byte + color:16byte）の後ろにある
+		{
+			"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 28, D3D11_INPUT_PER_VERTEX_DATA, 0
+        },
 	};
 	
 	/* 解説：
@@ -254,6 +272,7 @@ bool DX11Device::CreateInputLayout(ID3DBlob* vsBlob, ID3D11InputLayout** outLayo
 		vsBlob->GetBufferSize(),
 		outLayout
 	);
+
 
 	if (FAILED(hr))
 	{

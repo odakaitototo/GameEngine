@@ -23,9 +23,24 @@
 // 作業内容：#5
 // 　　　追加：カメラのキー入力移動
 // 
+<<<<<<< HEAD
+// 作成日：2025/12/29
+// 作業内容：#6
+// 　　　追加：タイマーの実装
+// 
+// 作成日：2025/12/29
+// 作業内容：#7
+// 　　　追加：Inputシステムの追加
+// 
+// 作成日：2025/12/31
+// 作業内容：#8
+//       追加：オブジェクト表示
+// 
+=======
 // 作成日：2025/02/10
 // 作業内容：#6
 //       追加：ジオメトリ生成関数の追加（立方体の呼び出し）
+>>>>>>> c7954a2b2189a89db2a31026260ab2002fb48765
 // 
 ////////////////////////////////
 
@@ -44,10 +59,28 @@
 #include "Systems/RenderSystem.h"
 
 // #5:カメラキー入力移動に必要なヘッダー
+<<<<<<< HEAD
+#include "systems/CameraControlSystem.h"
+
+// #6:ゲームタイマーに必要なヘッダー
+#include "Core/GameTimer.h"
+
+// #7:インプットクラスに必要なヘッダー
+#include "Core/Input.h"
+
+// #8:オブジェクト表示に必要なヘッダー
+#include "Core/OBJLoader.h"
+#include "Systems/RenderSystem.h"
+
+// #9 オブジェクトの回転に必要なヘッダー
+#include "Systems/Rotationsystem.h"
+=======
 #include "Systems/CameraControlSystem.h"
+>>>>>>> c7954a2b2189a89db2a31026260ab2002fb48765
 
 // #3:グローバル変数としてCoordinatorを用意（どこからでもアクセスできるようにするため）
 Coordinator gCoordinator;
+Input gInput; // どこからでも使える入力管理者
 
 
 
@@ -70,6 +103,11 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	}
 
 	gCoordinator.Init();
+	gInput.Init(); // #7:入力システムの初期化
+
+	// #6:タイマーの初期化と作成
+	GameTimer timer;
+	timer.Reset();
 
 	// #3:コンポーネントの登録
 	// 「このゲームでは　TransformとMeshというデータを使います」と教える
@@ -90,6 +128,9 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		gCoordinator.SetSystemSignature<CameraControlSystem>(signature);
 	}
 
+	// #8:回転システムの登録
+	auto rotationSystem = gCoordinator.RegisterSystem<RotationSystem>();
+
 	// #3:システムが担当する条件（シグネチャ）を設定
 	// 「RenderSystemは、TransformとMeshの両方を持っているEntityだけを扱うよ」という設定
 	{
@@ -106,6 +147,43 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	// #3:ゲームオブジェクト（Entity）の作成テスト
 	// 
 	///////////////////////////////////////////////
+<<<<<<< HEAD
+	
+	std::vector<Vertex> meshVertices; // 手打ちデータを消し、OBJ読み込み用のvectorを用意
+
+	if (!OBJLoader::Load("C:\\cube.obj", meshVertices))
+	{
+		MessageBox(NULL, L"cube.obj Load Failed", L"Error", MB_OK);
+		return - 1;
+	}
+
+	if (meshVertices.empty())
+	{
+		MessageBox(NULL, L"Mesh Vertices is Empty! (0)", L"Error", MB_OK);
+		return -1;
+	}
+
+	for (int i = 0; i < 5; ++i) //ループを使って5個のEntityを作る
+	{
+		// 1. Entity（ID）を発行
+		Entity box = gCoordinator.CreateEntity();
+
+		// 2. 位置（Transform）を設定
+		Transform trans;
+		// X座標をずらして横一列に並べる ( -4.0, -2.0, 0.0, 2.0, 4.0 )
+		trans.Position = XMFLOAT3((float)(i - 2) * 2.5f, 0.0f, 0.0f);
+		trans.Rotation = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		trans.Scale = XMFLOAT3(1.0f, 1.0f, 1.0f);
+		gCoordinator.AddComponent(box, trans);
+
+		// 3. 形（Mesh）を設定
+		Mesh mesh;
+		mesh.Vertices = meshVertices; // 読み込んだデータをコピーして渡す
+		gCoordinator.AddComponent(box, mesh);
+	}
+
+=======
+>>>>>>> c7954a2b2189a89db2a31026260ab2002fb48765
 
 	// #6:Entityを1つ作成
 	Entity myEntity = gCoordinator.CreateEntity();
@@ -115,10 +193,14 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 
 	// #6:形状情報（Mesh）を追加
 	Mesh mesh;
+<<<<<<< HEAD
+	mesh.Vertices = meshVertices;
+=======
 
 	// #6:直接頂点を書く代わりに、関数を呼び出して立方体を取得します
 	mesh.Vertices = GeometoryGenerator::CreateCube(1.0f);
 
+>>>>>>> c7954a2b2189a89db2a31026260ab2002fb48765
 	gCoordinator.AddComponent(myEntity, mesh);
 	
 	// #3:三角形の頂点データ
@@ -151,11 +233,14 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	Transform cameraTransform;
 	cameraTransform.Position = XMFLOAT3(0.0f, 0.0f, -2.0f);
 	cameraTransform.Rotation = XMFLOAT3(0.0f, 0.0f, 0.0f);
-
 	gCoordinator.AddComponent(cameraEntity, cameraTransform);
 
-	// カメラ設定：今回はデフォルト設定のまま
-	gCoordinator.AddComponent(cameraEntity, Camera());
+	Camera cameraComp;
+	// #6:ここで計算
+	cameraComp.AspectRatio = (float)SCREEEN_WIDTH / (float)SCREEN_HEIGHT;
+	gCoordinator.AddComponent(cameraEntity, cameraComp);
+
+	
 
 
 
@@ -163,8 +248,21 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	// メインループ
 	while (window.ProcessMessage())
 	{
+
+		// 時間計算
+		timer.Tick();
+		float dt = timer.DeltaTime();
+
+		// #7:入力情報の更新
+		gInput.Update();
+
+		// カメラ更新(ｄｔを渡す)
+		cameraControlSystem->Update(&gCoordinator, dt);
+
+		rotationSystem->Update(&gCoordinator, dt);
+	
 		// #5:カメラ操作の更新（描画の前にやる）
-		cameraControlSystem->Update(&gCoordinator);
+		//cameraControlSystem->Update(&gCoordinator, cameraEntity);
 
 		// #1：描画開始（画面を濃い青色でクリア）
 		dx11.Begin(0.1f, 0.2f, 0.1f); // ウィンドウの色設定
