@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SourceFile\Core\Aplication.cpp" />
     <ClCompile Include="SourceFile\Core\GameTimer.cpp" />
     <ClCompile Include="SourceFile\Core\Input.cpp" />
     <ClCompile Include="SourceFile\Core\Main.cpp" />
@@ -144,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HeaderFile\Components\Components.h" />
+    <ClInclude Include="HeaderFile\Core\Aplication.h" />
     <ClInclude Include="HeaderFile\Core\GameTimer.h" />
     <ClInclude Include="HeaderFile\Core\Input.h" />
     <ClInclude Include="HeaderFile\Core\Main.h" />

@@ -59,16 +59,16 @@ public:
 	void Shutdown();
 
 private:
-	DX11Device* m_device; // 描画機能へのポインタ
-	ID3D11DeviceContext* m_context; // 描画コマンド発行用
+	DX11Device* m_device = nullptr; // 描画機能へのポインタ
+	ID3D11DeviceContext* m_context = nullptr; // 描画コマンド発行用
 
 	// シェーダー関連（Main.cppから引っ越してくる）
-	ID3D11VertexShader* m_vertexShader;
-	ID3D11PixelShader* m_pixelShader;
-	ID3D11InputLayout* m_inputLayout;
+	ID3D11VertexShader* m_vertexShader = nullptr;
+	ID3D11PixelShader* m_pixelShader = nullptr;
+	ID3D11InputLayout* m_inputLayout = nullptr;
 
 
-	ID3D11Buffer* m_constantBuffer;
+	ID3D11Buffer* m_constantBuffer = nullptr;
 
 	// 各Entityごとの頂点バッファを管理する地図
 	// キー：Entity, ID, 値：そのEntity専用の頂点バッファ

@@ -1,136 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="ソース ファイル\Core">
-      <UniqueIdentifier>{371eb535-5154-4425-84d1-c6b8628fe1ff}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Graphics">
-      <UniqueIdentifier>{b76f2569-ec3b-4cf6-acfd-1df2daa32edd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\ECS">
-      <UniqueIdentifier>{a2a1102b-654e-4953-971c-ca5907c88ccc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Components">
-      <UniqueIdentifier>{317282d3-39b8-4c08-ba74-7097f01b44bc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Systems">
-      <UniqueIdentifier>{9f17adce-b6b2-4c8e-a3a1-97ff5e0bb913}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Core">
-      <UniqueIdentifier>{5ef0209d-bc04-40df-834e-e98b848b9ed9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Graphics">
-      <UniqueIdentifier>{7011a3dc-3cf6-4b0a-a79e-14eb38d93428}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\ECS">
-      <UniqueIdentifier>{8053cfec-791f-4569-a466-af7755ac9477}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Components">
-      <UniqueIdentifier>{26e046b7-2f95-42d7-8554-c053aac202f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Systems">
-      <UniqueIdentifier>{43d23577-5e97-4c6a-9a05-1a603a776c11}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shaders">
-      <UniqueIdentifier>{fe932bad-4aca-47d5-80e1-efda83b042bc}</UniqueIdentifier>
-    </Filter>
+    <FxCompile Include="Shaders\SimplePixelShader.hlsl" />
+    <FxCompile Include="Shaders\SimpleVertexShader.hlsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SourceFile\Graphics\DX11Device.cpp">
-      <Filter>ソース ファイル\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFile\Core\Main.cpp">
-      <Filter>ソース ファイル\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFile\Core\Window.cpp">
-      <Filter>ソース ファイル\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFile\Systems\RenderSystem.cpp">
-      <Filter>ソース ファイル\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFile\Systems\CameraControlSystem.cpp">
-      <Filter>ソース ファイル\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFile\Core\GameTimer.cpp">
-      <Filter>ソース ファイル\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFile\Core\Input.cpp">
-      <Filter>ソース ファイル\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceFile\Core\OBJLoader.cpp">
-      <Filter>ソース ファイル\Core</Filter>
-    </ClCompile>
+    <ClCompile Include="SourceFile\Core\GameTimer.cpp" />
+    <ClCompile Include="SourceFile\Core\Input.cpp" />
+    <ClCompile Include="SourceFile\Core\Main.cpp" />
+    <ClCompile Include="SourceFile\Core\OBJLoader.cpp" />
+    <ClCompile Include="SourceFile\Core\Window.cpp" />
+    <ClCompile Include="SourceFile\Graphics\DX11Device.cpp" />
+    <ClCompile Include="SourceFile\Systems\CameraControlSystem.cpp" />
+    <ClCompile Include="SourceFile\Systems\RenderSystem.cpp" />
+    <ClCompile Include="SourceFile\Core\Aplication.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="HeaderFile\Graphics\DX11Device.h">
-      <Filter>ヘッダー ファイル\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="HeaderFile\ECS\ECSTypes.h">
-      <Filter>ヘッダー ファイル\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="HeaderFile\ECS\EntityManager.h">
-      <Filter>ヘッダー ファイル\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="HeaderFile\ECS\ComponentManager.h">
-      <Filter>ヘッダー ファイル\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="HeaderFile\Core\Main.h">
-      <Filter>ヘッダー ファイル\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="HeaderFile\Core\Window.h">
-      <Filter>ヘッダー ファイル\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="HeaderFile\ECS\Coordinator.h">
-      <Filter>ヘッダー ファイル\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="HeaderFile\ECS\SystemManager.h">
-      <Filter>ヘッダー ファイル\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="HeaderFile\Components\Components.h">
-      <Filter>ヘッダー ファイル\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="HeaderFile\Systems\RenderSystem.h">
-      <Filter>ヘッダー ファイル\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="HeaderFile\Systems\CameraControlSystem.h">
-      <Filter>ヘッダー ファイル\Systems</Filter>
-    </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="HeaderFile\Core\GameTimer.h">
-      <Filter>ヘッダー ファイル\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="HeaderFile\Core\Input.h">
-      <Filter>ヘッダー ファイル\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="HeaderFile\Core\OBJLoader.h">
-      <Filter>ヘッダー ファイル\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="HeaderFile\Systems\Rotationsystem.h">
-      <Filter>ヘッダー ファイル\Systems</Filter>
-=======
-    <ClInclude Include="HeaderFile\Graphics\GeometryGenerator.h">
-      <Filter>ヘッダー ファイル\Graphics</Filter>
->>>>>>> c7954a2b2189a89db2a31026260ab2002fb48765
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Shaders\SimpleVertexShader.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Shaders\SimplePixelShader.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
+    <ClInclude Include="HeaderFile\Components\Components.h" />
+    <ClInclude Include="HeaderFile\Core\GameTimer.h" />
+    <ClInclude Include="HeaderFile\Core\Input.h" />
+    <ClInclude Include="HeaderFile\Core\Main.h" />
+    <ClInclude Include="HeaderFile\Core\OBJLoader.h" />
+    <ClInclude Include="HeaderFile\Core\Window.h" />
+    <ClInclude Include="HeaderFile\ECS\ComponentManager.h" />
+    <ClInclude Include="HeaderFile\ECS\Coordinator.h" />
+    <ClInclude Include="HeaderFile\ECS\ECSTypes.h" />
+    <ClInclude Include="HeaderFile\ECS\EntityManager.h" />
+    <ClInclude Include="HeaderFile\ECS\SystemManager.h" />
+    <ClInclude Include="HeaderFile\Graphics\DX11Device.h" />
+    <ClInclude Include="HeaderFile\Graphics\GeometryGenerator.h" />
+    <ClInclude Include="HeaderFile\Systems\CameraControlSystem.h" />
+    <ClInclude Include="HeaderFile\Systems\RenderSystem.h" />
+    <ClInclude Include="HeaderFile\Systems\Rotationsystem.h" />
+    <ClInclude Include="HeaderFile\Core\Aplication.h" />
   </ItemGroup>
 </Project>
